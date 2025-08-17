@@ -1,0 +1,9 @@
+body { font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; padding: 24px; background: #f7fafc; color: #111827; }
+.container { max-width: 900px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 6px 20px rgba(2,6,23,0.08); }
+.input { width: 60%; padding: 8px 10px; border-radius: 6px; border: 1px solid #e5e7eb; }
+.btn { margin-left: 8px; padding: 8px 12px; border-radius: 6px; border: 0; background: #2563eb; color: white; cursor: pointer; }
+.warn { margin-top: 12px; color: #b91c1c; }
+.mapWrap { margin-top: 16px; }
+.results { margin-top: 16px; }
+ul { list-style: none; padding-left: 0; }
+li { padding: 8px 0; border-bottom: 1px dashed #e5e7eb; }
