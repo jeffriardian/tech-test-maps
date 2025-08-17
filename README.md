@@ -88,3 +88,7 @@ VITE_GOOGLE_MAPS_CLIENT_KEY=<your_client_key>
 - Backend + frontend running locally  
 - Working Google Maps embed & Places search  
 - Fullstack project pushed to a single GitHub repo
+
+## Demo / Local Run Video
+A video showing the project running locally can be found here: 
+[Google Drive Link](https://drive.google.com/file/d/1W3u4F6EoqQNURZ_2MBbscd-U6nG2RXtD/view?usp=sharing)
