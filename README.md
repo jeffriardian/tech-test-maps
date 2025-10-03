@@ -92,3 +92,4 @@ VITE_GOOGLE_MAPS_CLIENT_KEY=<your_client_key>
 ## Demo / Local Run Video
 A video showing the project running locally can be found here: 
 [Google Drive Link](https://drive.google.com/file/d/1W3u4F6EoqQNURZ_2MBbscd-U6nG2RXtD/view?usp=sharing)
+[Google Drive Link UI New Version](https://drive.google.com/file/d/1pvKcVJO80RAFKfrGJ6u16pOmd8wskvcS/view?usp=sharing)

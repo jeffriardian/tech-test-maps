@@ -5,6 +5,7 @@ export default function App() {
   const [places, setPlaces] = useState([])
   const [embedQ, setEmbedQ] = useState('')
   const [warning, setWarning] = useState('')
+  const [loading, setLoading] = useState(false)
   const mapRef = useRef(null)
   const mapInstance = useRef(null)
 
@@ -50,58 +51,69 @@ export default function App() {
   async function submit(e) {
     e.preventDefault()
     setWarning('')
-    const res = await fetch('/api/ask', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt }),
-    })
-    const data = await res.json()
-    if (data.warning) setWarning(data.warning)
-    setPlaces(data.places || [])
-    setEmbedQ(data.embed_q || '')
+    setLoading(true)
+    try {
+      const res = await fetch('/api/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt }),
+      })
+      const data = await res.json()
+      if (data.warning) setWarning(data.warning)
+      setPlaces(data.places || [])
+      setEmbedQ(data.embed_q || '')
+    } catch (err) {
+      setWarning('Error fetching data')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
     <div className="container">
-      <h1>Local LLM → Google Maps (demo)</h1>
-      <form onSubmit={submit}>
+      <h1 className="title">Local LLM → Google Maps</h1>
+      <form onSubmit={submit} className="searchBar">
         <input
           value={prompt}
           onChange={e => setPrompt(e.target.value)}
           placeholder="e.g. sushi near central Jakarta"
           className="input"
         />
-        <button className="btn">Search</button>
+        <button className="btn" disabled={loading}>
+          {loading ? 'Searching...' : 'Search'}
+        </button>
       </form>
 
       {warning && <div className="warn">{warning}</div>}
 
-      <div className="mapWrap">
-        <h3>Map</h3>
-        <div
-          ref={mapRef}
-          style={{ width: '100%', height: '450px', border: 0 }}
-        />
+      <div className="mapSection">
+        <div ref={mapRef} className="mapBox" />
       </div>
 
       <div className="results">
         <h3>Results</h3>
-        <ul>
+        {places.length === 0 && !loading && <p>No results yet</p>}
+        <div className="resultsGrid">
           {places.map(p => (
-            <li key={p.place_id || p.name}>
-              <b>{p.name}</b> — {p.address || 'n/a'} — rating: {p.rating || 'n/a'}{' '}
+            <div key={p.place_id || p.name} className="resultCard">
+              <div className="resultTitle">{p.name}</div>
+              <div className="resultInfo">{p.address || 'n/a'}</div>
+              <div className="resultRating">Rating: {p.rating || 'n/a'}</div>
               {p.place_id && (
                 <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name)}&query_place_id=${p.place_id}`}
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                    p.name
+                  )}&query_place_id=${p.place_id}`}
                   target="_blank"
                   rel="noreferrer"
+                  className="mapLink"
                 >
                   Open in Google Maps
                 </a>
               )}
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   )
